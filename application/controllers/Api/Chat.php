@@ -48,7 +48,14 @@ class Chat extends REST_Controller
       'id'   => $id,
       'name' => $name
     ];
-    $save = $this->Chat_model->add($data);
+
+    $check = $this->Chat_model->check($id);
+    if ($check) {
+      $save = $this->Chat_model->update($data);
+    } else {
+      $save = $this->Chat_model->add($data);
+    }
+
     if ($save) {
       $message = [
         'error'   => false,
